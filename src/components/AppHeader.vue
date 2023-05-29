@@ -5,15 +5,16 @@ export default{
 </script>
 
 <template>
-    <header class="p-3">
-        <div class="container d-flex justify-content-between">
+    <header class="p-3 mb-4">
+        <div class="container d-flex justify-content-between align-items-center">
             <div class="logo">
                 LOGO
             </div>
             <nav>
                 <ul class="list-unstyled">
                     <li>
-                        <a href="#">Projects</a>
+                        <RouterLink :to="{ name: 'home' }" class="pe-3">Home</RouterLink>
+                        <RouterLink :to="{ name: 'projects' }">Projects</RouterLink>
                     </li>
                 </ul>
             </nav>
@@ -22,4 +23,7 @@ export default{
 </template>
 
 <style scoped>
+header{
+    background-color: lightgray;
+}
 </style>

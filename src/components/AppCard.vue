@@ -1,9 +1,11 @@
 <script>
 export default {
-    name: 'AppMain',
+    name: 'AppCard',
     props: {
         title: String,
-        description: String
+        description: String,
+        id: Number,
+        slug: String
     }
 }
 </script>
@@ -14,7 +16,9 @@ export default {
         <div class="card-body">
             <h5 class="card-title">{{ title }}</h5>
             <p class="card-text">{{ description }}</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <router-link :to="{ name: 'project', params: { slug: slug, id:id } }" class="btn btn-primary">
+                Descrizione
+            </router-link>
         </div>
     </div>
 </template>
