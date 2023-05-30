@@ -10,7 +10,8 @@ export default {
     return {
       apiUrlBase: 'http://127.0.0.1:8000/api/',
       apiUrlProjects: 'projects',
-      data: []
+      data: [],
+      nextPage: null
     }
   },
   components: {
@@ -19,15 +20,17 @@ export default {
     AppCard
   },
   methods: {
-    getProjects() {
-      axios.get(this.apiUrlBase + this.apiUrlProjects).then((response) => {
-        this.data = response.data.results;
+    getProjects(url) {
+      axios.get(url).then((response) => {
+        let result = response.data.results.data;
+        this.nextPage=response.data.results.next_page_url;
+        this.data=[...this.data,...result];
       }
       );
     }
   },
   created() {
-    this.getProjects();
+    this.getProjects(this.apiUrlBase + this.apiUrlProjects);
   }
 }
 </script>
@@ -37,10 +40,13 @@ export default {
   <main>
     <div class="container">
       <h1 class="text-center">I miei Progetti</h1>
-      <div class="row mt-5 gy-3">
+      <div class="row mt-5 gy-3 mb-4">
         <div class="col col-md-4" v-for="project in data">
           <AppCard :title="project.title" :description="project.description" :id="project.id" :slug="project.slug" />
         </div>
+      </div>
+      <div class="d-flex justify-content-center align-items-center">
+        <button type="button" class="btn btn-primary" @click="getProjects(nextPage)" v-if="nextPage">Mostra altri</button>
       </div>
     </div>
   </main>
