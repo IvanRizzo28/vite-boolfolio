@@ -42,7 +42,7 @@ export default {
       <h1 class="text-center">I miei Progetti</h1>
       <div class="row mt-5 gy-3 mb-4">
         <div class="col col-md-4" v-for="project in data">
-          <AppCard :title="project.title" :description="project.description" :id="project.id" :slug="project.slug" />
+          <AppCard :title="project.title" :description="project.description" :id="project.id" :slug="project.slug" :image="project.image"/>
         </div>
       </div>
       <div class="d-flex justify-content-center align-items-center">

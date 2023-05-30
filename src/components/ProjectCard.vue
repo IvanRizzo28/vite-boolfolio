@@ -9,7 +9,7 @@ export default {
 
 <template>
     <div class="card h-100" style="width: 18rem;">
-        <img src="..." class="card-img-top" alt="...">
+        <img :src="data.image" class="card-img-top" :alt="data.title">
         <div class="card-body">
             <h5 class="card-title">{{ data.title }}</h5>
             <p class="card-text">{{ data.description }}</p>
