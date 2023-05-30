@@ -14,7 +14,7 @@ export default {
             <h6>Progetti correlati:</h6>
             <ul v-for="item in data.projects">
                 <li>
-                    <router-link :to="{ name: 'technology', params: { slug: item.slug, id: item.id } }"
+                    <router-link :to="{ name: 'project', params: { slug: item.slug, id: item.id } }"
                         class="btn btn-success">
                         {{ item.title }}
                     </router-link>

@@ -18,10 +18,16 @@ export default {
     },
     methods: {
         getProjects() {
-            axios.get("http://127.0.0.1:8000/api/projects/"+this.$route.params.id).then((response) => {
+            axios.get("http://127.0.0.1:8000/api/projects/" + this.$route.params.id).then((response) => {
                 this.data = response.data.results;
             }
-            );
+            ).catch((error) => {
+                console.log(error);
+
+                if (error.response.status === 404) {
+                    this.$router.push({ name: 'not-found' });
+                }
+            });
         }
     },
     created() {
@@ -33,7 +39,7 @@ export default {
 <template>
     <AppHeader></AppHeader>
     <div class="container d-flex align-items-center justify-content-center">
-        <ProjectCard :data="data"/>
+        <ProjectCard :data="data" />
     </div>
     <AppFooter />
 </template>

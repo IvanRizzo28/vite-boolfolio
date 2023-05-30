@@ -4,14 +4,15 @@ import AppHeader from '../components/AppHeader.vue';
 import AppCard from '../components/AppCard.vue';
 import axios from 'axios';
 
+import { store } from '../store.js';
+
 export default {
   name: 'ProjectsList',
   data() {
     return {
-      apiUrlBase: 'http://127.0.0.1:8000/api/',
-      apiUrlProjects: 'projects',
       data: [],
-      nextPage: null
+      nextPage: null,
+      store
     }
   },
   components: {
@@ -30,7 +31,7 @@ export default {
     }
   },
   created() {
-    this.getProjects(this.apiUrlBase + this.apiUrlProjects);
+    this.getProjects(this.store.apiUrlBase + this.store.apiUrlProjects);
   }
 }
 </script>
