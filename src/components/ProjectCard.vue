@@ -9,6 +9,7 @@ export default {
     },
     data() {
         return {
+            comments: [],
             name: null,
             message: null,
             store
@@ -16,16 +17,30 @@ export default {
     },
     methods: {
         get() {
-            axios.post(this.store.apiUrlBase+'comment', {
+            let tmp={
                 name: this.name,
                 message: this.message,
                 project_id: this.data.id
-            }).then(function (response) {
-                    console.log(response);
+            };
+            axios.post(this.store.apiUrlBase+'comment', tmp).then(response => {
+                tmp['created_at']=new Date();
+                this.comments=this.comments.concat(tmp);
+                this.name="";
+                this.message="";
             }).catch(function (error) {
                     console.log(error);
             });
+        },
+        getDate(date){
+            let tmp=new Date(date);
+            return tmp.toLocaleDateString()+" "+tmp.toLocaleTimeString();
         }
+    },
+    computed:{
+       
+    },
+    created(){
+        this.comments=this.data.comments;
     }
 }
 </script>
@@ -42,10 +57,10 @@ export default {
             </div>
             <div class="mt-2">
                 <h6 v-show="data.technologies.length">Technologies:</h6>
-                <ul v-for="item in data.technologies">
-                    <li>
+                <ul>
+                    <li v-for="item in data.technologies">
                         <router-link :to="{ name: 'technology', params: { slug: item.slug, id: item.id } }"
-                            class="btn btn-success">
+                            class="btn btn-success mb-1">
                             {{ item.name }}
                         </router-link>
                     </li>
@@ -53,10 +68,12 @@ export default {
             </div>
             <hr>
             <div class="mt-2">
-                <h6 v-show="data.comments.length">Comments:</h6>
-                <ul v-for="item in data.comments" class="list-unstyled">
-                    <li class="ps-1">
-                        <strong>{{ item.name }}:</strong>
+                <h6>Comments:</h6>
+                <ul class="list-unstyled comments-list pb-1">
+                    <li class="ps-1" v-for="item in comments">
+                        <strong v-if="item.name">{{ item.name }}:</strong>
+                        <strong v-else class="text-decoration-underline">Anonimo:</strong>
+                        <small class="d-flex">{{ getDate(item.created_at) }}</small>
                         <p class="ps-2">{{ item.message }}</p>
                     </li>
                 </ul>
@@ -75,4 +92,9 @@ export default {
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+    .comments-list{
+        max-height: 350px;
+        overflow-y: auto;
+    }
+</style>
